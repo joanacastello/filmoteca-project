@@ -1,53 +1,58 @@
 <app-header></app-header>
-<div class="container">
-    <!--app-search-bar></app-search-bar-->
-    <!-- INICI SEARCH BAR -->
-    <div class="row text-center search-bar">
-      <div class="col">
-        <input type="text" class="search-input" id="inputTitle" placeholder="Introduce el título...">
-      </div>
-      <div class="col ">
-        <button class="btn btn-danger">Buscar</button>
-      </div>
+<div class="container-fluid">
+    
+  <!--app-search-bar></app-search-bar-->
+  <div class="row text-center search-bar">
+    <div class="col">
+      <input type="text" class="form-control" #movieInput placeholder="Introduce el título...">
     </div>
-    <!-- FI SEARCH BAR-->
+    <div class="col ">
+      <button class="btn btn-danger">Buscar</button>
+    </div>
+  </div>
 
-    <div class="row movie-list-info">
-      <!-- app-movie-list></app-movie-list -->
-      <!-- INICI MOVIE LIST -->
-      <div class="col">
+    
+    <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
+      <div class=ex1 >
+        <div class="col-12 text-center">
+          <div class="alert alert-danger" role="alert">
+            {{apiResponse['Error']}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #elseTemplate>
+      <!-- Per a cada pelicula obtinguda, creem una carta -->
+      <div class="row movie-list-info">
+        <!-- app-movie-list></app-movie-list -->
+        <!-- INICI MOVIE LIST -->
         <div class="col-md-6">
-          <table class="table">
-            <tr>
-              <td>La la land</td>
-            </tr>
-            <tr>
-              <td>El padrino</td>
-            </tr>
-            <tr>
-              <td>Los teletubbies</td>
-            </tr>  
-          </table>
+          <div class="list-group" *ngFor="let movie of apiResponse['Search']">
+            <button class="list-group-item list-group-item-action" (click)="getDetails(this.movie)">
+              {{movie['Title']}}
+            </button>
+          </div>
         </div>
-      </div>
-      <!-- FI MOVIE LIST -->
+          
+        <!-- FI MOVIE LIST -->
 
-      <!-- app-movie-details></app-movie-details -->
-      <!-- INICI MOVIE DETAILS -->
-      <div class="col">
+        <!-- app-movie-details></app-movie-details -->
+        <!-- INICI MOVIE DETAILS -->
         <div class="col-md-5">
-          <h2>Titol pelicula</h2>
-          <p>jhfcgew sjsgf cblie wu ghfhb cñiquerh bfcv iujkwe   qgbvcfi ñlugb rvcui irwuefv c qerhvcñ kide qravhkñerh lkujwfh lkerhfvjkh ewl h</p>
+          <div class="card" [hidden]="isShowDiv">
+            <img src="{{movieDetails['Poster']}}" class="card-img-top">
+            <div class="card-body">
+              <h4 class="card-title">{{movieDetails['Title']}}</h4>
+              <p>{{movieDetails['Plot']}}</p>
+              <p> <b>Director(s):</b> {{movieDetails['Director']}}</p>
+              <p> <b>Reparto:</b> {{movieDetails['Actors']}}</p>
+              <p> <b>Idioma:</b> {{movieDetails['Language']}}</p>
+            </div>
+          </div>
         </div>
+        <!-- FI MOVIE DETAILS -->
       </div>
-      <!-- FI MOVIE DETAILS -->
-    </div>
-      
-  
-  
-
-
-
-  
+    </ng-template>
 </div>
 
