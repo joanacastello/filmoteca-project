@@ -1,0 +1,32 @@
+/* GLOBAL VARIABLES */
+:root {
+    /* Colors */
+    --first-hue-color: 0;
+    --second-hue-color: 228;
+
+    --first-color: hsl(var(--first-color), 78%, 64%);
+    --second-color: hsl(var(--second-color), 24%, 28%);
+    --title-color: hsl(var(--first-hue-color), 8%, 15%);
+    --text-color: hsl(var(--first-hue-color), 8%, 45%);
+    --text-color-light: hsl(var(--first-hue-color), 8%, 65%);
+    --container-color: white;
+
+    /* Font and typography */
+    --body-font: 'Roboto';
+    --h1-font-size: 1.5rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+
+    /* Font weight */
+    --font-medium: 400;
+    --font-semi-bold: 500;
+}
+
+h1 {
+    color: white;
+    font-size: var(--h1-font-size);
+    background-color: hsl(0, 78%, 64%);
+    text-align: center;
+    padding: 1.5rem;
+    font: var(--body-font);
+}
