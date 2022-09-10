@@ -76,11 +76,15 @@ export class AppComponent implements OnInit{
 
   directors = '';
   actors = '';
-  // SMells bad
+  // Smells baaaaad
   indexes = new  Array();
   act = new Array();
   isShowDiv = true;
+
   getDetails(result: any){
+    // Empty arrays to not stack info
+    this.indexes = [];
+    this.act= [];
     console.log(result)
     this.name= result.Title;
     this.isShowDiv = false;
