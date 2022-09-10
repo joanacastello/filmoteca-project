@@ -1,0 +1,4 @@
+h1{
+    background-image: linear-gradient(to top, var(--first-color), var(--first-color-darker));
+}
+

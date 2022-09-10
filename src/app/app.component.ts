@@ -1,19 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { of, fromEvent } from "rxjs";
 import { debounceTime, map, distinctUntilChanged, filter} from "rxjs/operators";
 
 const APIKEY1 = "f5ce28d0768ba39023be1785d9178b7c";
-const APIKEY2 = "52c80efd";
-
-const PARAMS = new HttpParams({
-  fromObject: {
-    action: "opensearch",
-    format: "json",
-    origin: "*"
-  }
-});
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
