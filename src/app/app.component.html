@@ -28,26 +28,26 @@
         <!-- app-movie-list></app-movie-list -->
         <!-- INICI MOVIE LIST -->
         <div class="col-md-6">
-          <div class="list-group" *ngFor="let movie of apiResponse['Search']">
+          <div class="list-group" *ngFor="let movie of apiResponse['results']">
             <button class="list-group-item list-group-item-action" (click)="getDetails(this.movie)">
-              {{movie['Title']}}
+              {{movie['title']}}
             </button>
           </div>
         </div>
           
         <!-- FI MOVIE LIST -->
-
+        
         <!-- app-movie-details></app-movie-details -->
         <!-- INICI MOVIE DETAILS -->
         <div class="col-md-5">
           <div class="card" [hidden]="isShowDiv">
-            <img src="{{movieDetails['Poster']}}" class="card-img-top">
+            <img src="https://image.tmdb.org/t/p/w185/{{movieDetails['backdrop_path']}}" class="card-img-top">
             <div class="card-body">
-              <h4 class="card-title">{{movieDetails['Title']}}</h4>
-              <p>{{movieDetails['Plot']}}</p>
-              <p> <b>Director(s):</b> {{movieDetails['Director']}}</p>
-              <p> <b>Reparto:</b> {{movieDetails['Actors']}}</p>
-              <p> <b>Idioma:</b> {{movieDetails['Language']}}</p>
+              <h4 class="card-title">{{movieDetails['title']}}</h4>
+              <p id="overview"></p>
+              <p> <b>Director(s):</b> {{directors}}</p>
+              <p> <b>Reparto:</b> {{actors}}</p>
+              <p> <b>Idioma:</b> {{movieDetails['original_language']}}</p>
             </div>
           </div>
         </div>

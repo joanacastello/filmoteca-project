@@ -22,12 +22,13 @@ const PARAMS = new HttpParams({
 
 export class AppComponent implements OnInit{
   title = 'filmoteca-project';
-  // 
+  
   @ViewChild('movieInput', {static: true})
   movieInput!: ElementRef;
   apiResponse: any;
   movieDetails: any;
   name:string='';
+  director:string='';
 
   constructor(private elementRef: ElementRef, private httpClient: HttpClient) {
     this.apiResponse = [];
@@ -69,17 +70,42 @@ export class AppComponent implements OnInit{
     if (term === '') {
       return of([]);
     }
-    // console.log('http://www.omdbapi.com/?s=' + term + '&apikey=' + APIKEY2, { params: PARAMS.set('search', term) });
-    return this.httpClient.get('http://www.omdbapi.com/?s=' + term + '&apikey=' + APIKEY2, { params: PARAMS.set('search', term) });
+    console.log('https://api.themoviedb.org/3/search/movie?api_key=' + APIKEY1 + "&query=" + term + "&language=es-ES");
+    return this.httpClient.get('https://api.themoviedb.org/3/search/movie?api_key=' + APIKEY1 + "&query=" + term + "&language=es-ES");
   }
 
+  directors = '';
+  actors = '';
+  // SMells bad
+  indexes = new  Array();
+  act = new Array();
   isShowDiv = true;
-  getDetails(movie: any){
-    this.name= movie.Title;
+  getDetails(result: any){
+    console.log(result)
+    this.name= result.Title;
     this.isShowDiv = false;
-    this.httpClient.get('http://www.omdbapi.com/?i=' + movie.imdbID + '&apikey=' + APIKEY2, { params: PARAMS.set('search', movie.imdbID) })
+    console.log('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY1 + "&append_to_response=credits,videos" +  "&language=es-ES")
+    this.httpClient.get('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY1 + "&append_to_response=credits,videos" + "&language=es-ES")
       .subscribe(data=> {
         this.movieDetails=data;
+        
+        for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
+          if (this.movieDetails['credits']['crew'][i]['job'] == "Director"){
+            console.log(this.movieDetails['credits']['crew'][i]['name'])
+            this.indexes.push(this.movieDetails['credits']['crew'][i]['name']);
+          }
+        }
+        let j = 0;
+        while (j < 4){
+          this.act.push(this.movieDetails['credits']['cast'][j]['name'])
+          j++;
+        }
+        console.log(this.indexes[0])
+        this.directors = this.indexes.toString();
+        this.directors.replace(',',', ');
+        this.actors = this.act.toString();
+        this.actors.replace(',',', ');
       })
+
   }
 }
