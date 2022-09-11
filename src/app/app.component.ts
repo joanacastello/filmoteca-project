@@ -1,19 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { of, fromEvent } from "rxjs";
 import { debounceTime, map, distinctUntilChanged, filter} from "rxjs/operators";
 
 const APIKEY1 = "f5ce28d0768ba39023be1785d9178b7c";
-const APIKEY2 = "52c80efd";
-
-const PARAMS = new HttpParams({
-  fromObject: {
-    action: "opensearch",
-    format: "json",
-    origin: "*"
-  }
-});
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,12 +12,13 @@ const PARAMS = new HttpParams({
 
 export class AppComponent implements OnInit{
   title = 'filmoteca-project';
-  // 
+  
   @ViewChild('movieInput', {static: true})
   movieInput!: ElementRef;
   apiResponse: any;
   movieDetails: any;
   name:string='';
+  director:string='';
 
   constructor(private elementRef: ElementRef, private httpClient: HttpClient) {
     this.apiResponse = [];
@@ -69,17 +60,44 @@ export class AppComponent implements OnInit{
     if (term === '') {
       return of([]);
     }
-    // console.log('http://www.omdbapi.com/?s=' + term + '&apikey=' + APIKEY2, { params: PARAMS.set('search', term) });
-    return this.httpClient.get('http://www.omdbapi.com/?s=' + term + '&apikey=' + APIKEY2, { params: PARAMS.set('search', term) });
+    //console.log('https://api.themoviedb.org/3/search/movie?api_key=' + APIKEY1 + "&query=" + term + "&language=es-ES");
+    return this.httpClient.get('https://api.themoviedb.org/3/search/movie?api_key=' + APIKEY1 + "&query=" + term + "&language=es-ES");
   }
 
+  directors = '';
+  actors = '';
+  // Smells baaaaad
+  indexes = new  Array();
+  act = new Array();
   isShowDiv = true;
-  getDetails(movie: any){
-    this.name= movie.Title;
+
+  getDetails(result: any){
+    // Empty arrays to not stack info
+    this.indexes = [];
+    this.act= [];
+
+    this.name= result.Title;
     this.isShowDiv = false;
-    this.httpClient.get('http://www.omdbapi.com/?i=' + movie.imdbID + '&apikey=' + APIKEY2, { params: PARAMS.set('search', movie.imdbID) })
+    this.httpClient.get('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY1 + "&append_to_response=credits,videos" + "&language=es-ES")
       .subscribe(data=> {
         this.movieDetails=data;
-      })
+    })
+    // Get Directors and Actors
+    for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
+      if (this.movieDetails['credits']['crew'][i]['job'] == "Director"){
+        this.indexes.push(this.movieDetails['credits']['crew'][i]['name']);
+      }
+    }
+    let j = 0;
+    while (j < 4){
+      this.act.push(this.movieDetails['credits']['cast'][j]['name'])
+      j++;
+    }
+    this.directors = this.indexes.toString();
+    this.directors.replace(',',', ');
+    this.actors = this.act.toString();
+    this.actors.replace(',',', ');
+
+
   }
 }

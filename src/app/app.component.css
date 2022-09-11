@@ -1,3 +1,55 @@
 .search-input {
     width: 100%;
 }
+
+.movie-list{
+    overflow-y: scroll;
+    height: 600px;
+    background-image: linear-gradient(to top, var(--first-color), var(--first-color-lighter));
+    border-radius: 1rem;
+}
+
+.movie-details{
+    background-image: linear-gradient(to top, var(--second-color-medium), var(--second-color-lighter));
+    border-color: white;
+}
+
+.poster-img{
+    height: 350px;
+}
+
+.btn-search{
+    background-color: var(--first-color);
+    color: white;
+}
+
+.parent{
+    background-color: var(--first-color-lighter1);
+    display: block;
+    height: 100%;
+}
+
+
+/* Dispositius menuts */
+@media screen and (min-width: 350px) {
+
+}
+
+/* Dispositius mitjans */
+@media screen and (min-width: 568px) {
+
+}
+
+/* Dispositius grans */
+@media screen and (min-width: 768px) {
+    .movie-details{
+        height: 600px;
+    }
+
+    
+    
+}
+
+@media screen and (max-width: 1320px) {
+
+}

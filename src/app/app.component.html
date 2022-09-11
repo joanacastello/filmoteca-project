@@ -1,17 +1,13 @@
 <app-header></app-header>
-<div class="container-fluid">
+<div class="container-fluid parent pb-4">
     
-  <!--app-search-bar></app-search-bar-->
-  <div class="row text-center search-bar">
-    <div class="col">
-      <input type="text" class="form-control" #movieInput placeholder="Introduce el título...">
-    </div>
-    <div class="col ">
-      <button class="btn btn-danger">Buscar</button>
+  <div class="row search-bar justify-content-center pb-3 pt-2">
+    <div class="col-md-5 d-flex">
+      <input type="text" class="form-control p-2 m-1" #movieInput placeholder="Introduce el título...">
+      <button class="btn btn-search p-2 m-1">Buscar</button>
     </div>
   </div>
 
-    
     <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
       <div class=ex1 >
         <div class="col-12 text-center">
@@ -23,35 +19,33 @@
     </ng-container>
 
     <ng-template #elseTemplate>
-      <!-- Per a cada pelicula obtinguda, creem una carta -->
-      <div class="row movie-list-info">
-        <!-- app-movie-list></app-movie-list -->
-        <!-- INICI MOVIE LIST -->
-        <div class="col-md-6">
-          <div class="list-group" *ngFor="let movie of apiResponse['Search']">
-            <button class="list-group-item list-group-item-action" (click)="getDetails(this.movie)">
-              {{movie['Title']}}
+      <div class="row movie-list-info justify-content-center">
+        <div class="col-md-3 movie-list mx-4">
+          <div class="list-group" *ngFor="let movie of apiResponse['results']">
+            <button class="list-group-item list-group-item-action mt-1" (click)="getDetails(this.movie)">
+              {{movie['title']}}
             </button>
           </div>
         </div>
           
-        <!-- FI MOVIE LIST -->
-
-        <!-- app-movie-details></app-movie-details -->
-        <!-- INICI MOVIE DETAILS -->
-        <div class="col-md-5">
-          <div class="card" [hidden]="isShowDiv">
-            <img src="{{movieDetails['Poster']}}" class="card-img-top">
-            <div class="card-body">
-              <h4 class="card-title">{{movieDetails['Title']}}</h4>
-              <p>{{movieDetails['Plot']}}</p>
-              <p> <b>Director(s):</b> {{movieDetails['Director']}}</p>
-              <p> <b>Reparto:</b> {{movieDetails['Actors']}}</p>
-              <p> <b>Idioma:</b> {{movieDetails['Language']}}</p>
+        <div class="col-md-6">
+          <div class="card movie-details" [hidden]="isShowDiv">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="https://image.tmdb.org/t/p/w185/{{movieDetails['poster_path']}}" class="img-fluid rounded-start m-2 poster-img img-thumbnail">
+              </div>
+              <div class="col-md-7">
+                <div class="card-body">
+                  <h4 class="card-title">{{movieDetails['title']}}</h4>
+                  <p>{{movieDetails['overview']}}</p>
+                  <p> <b>Director(s):</b> {{directors}}</p>
+                  <p> <b>Reparto:</b> {{actors}}</p>
+                  <p> <b>Idioma original:</b> {{movieDetails['original_language']}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- FI MOVIE DETAILS -->
       </div>
     </ng-template>
 </div>

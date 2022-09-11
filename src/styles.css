@@ -1,15 +1,18 @@
 /* GLOBAL VARIABLES */
 :root {
     /* Colors */
-    --first-hue-color: 0;
-    --second-hue-color: 228;
+    --first-hue-color: 265;
+    --second-hue-color: 240;
 
-    --first-color: hsl(var(--first-color), 78%, 64%);
-    --second-color: hsl(var(--second-color), 24%, 28%);
+    --first-color: hsl(var(--first-hue-color), 11%, 22%);
+    --first-color-lighter1: hsl(var(--first-hue-color), 5%, 44%);
+    --first-color-lighter2: hsl(var(--first-hue-color), 3%, 75%);
+    --second-color: hsl(var(--second-hue-color), 70%, 80%);
+    --second-color-medium: hsl(var(--second-hue-color), 24%, 73%);
+    --second-color-lighter: hsl(var(--second-hue-color), 24%, 88%);
     --title-color: hsl(var(--first-hue-color), 8%, 15%);
     --text-color: hsl(var(--first-hue-color), 8%, 45%);
     --text-color-light: hsl(var(--first-hue-color), 8%, 65%);
-    --container-color: white;
 
     /* Font and typography */
     --body-font: 'Roboto';
@@ -22,11 +25,40 @@
     --font-semi-bold: 500;
 }
 
+html {
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    height: 100%;
+}
+
 h1 {
     color: white;
     font-size: var(--h1-font-size);
-    background-color: hsl(0, 78%, 64%);
+    background-color: var(--first-color);
     text-align: center;
     padding: 1.5rem;
     font: var(--body-font);
 }
+
+.app-root{
+    display: block;
+    min-height: 100%;
+    height: 100%;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .example {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+
