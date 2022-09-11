@@ -1,6 +1,6 @@
 # FilmotecaProject
 
-## IMPORTANTE: AÑADIR API KEY PRIVADA
+## :warning: IMPORTANTE: AÑADIR API KEY PRIVADA
 Para el correcto funcionamiento de la aplicación, se debe añadir en el fichero app.components.ts línea 6, la clave privada de la API The Movie Database (https://www.themoviedb.org/). 
 
 ## Development server
