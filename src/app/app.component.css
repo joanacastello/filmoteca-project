@@ -9,6 +9,10 @@
     border-radius: 1rem;
 }
 
+.movie-list::-webkit-scrollbar{
+    display: none;
+}
+
 .movie-details{
     background-image: linear-gradient(to top, var(--second-color-medium), var(--second-color-lighter));
 
