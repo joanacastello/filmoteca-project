@@ -18,44 +18,36 @@ export class AppComponent implements OnInit{
   apiResponse: any;
   movieDetails: any;
   name:string='';
-  director:string='';
+  directors:string='';
+  actors:string='';
+  year:string='';
 
   constructor(private elementRef: ElementRef, private httpClient: HttpClient) {
     this.apiResponse = [];
     this.movieDetails = [];
-
-    console.log(this.movieInput);
+    this.directors = '';
+    this.actors = '';
+    this.year= '';
   }
 
   ngOnInit() {
-      console.log(this.movieInput);
-      // event que es llança quan teclat (keyup)
-      // gastem pipe per a encadenar diferents operadors junts
       fromEvent(this.movieInput.nativeElement, 'keyup').pipe( 
 
-        // get value by mapping it
         map((event: any) => {
           return event.target.value;
         })
-        // comprovem que s'han introduit mes de dos caracters
         , filter(res => res.length > 2)
-        // refresca cada segon(?)
         , debounceTime(1000)
-        // comprova que la query es diferent de la anterior
         , distinctUntilChanged()
 
       ).subscribe((text: string) => {
         this.searchGetCall(text).subscribe((res) => {
-          console.log('res', res);
           this.apiResponse = res;
-        }, (err) => {
-          console.log('error', err);
         });
       });  
 
   }
 
-  // Fa la petició HTTP despres de passar per tots els filtres
   searchGetCall(term: string) {
     if (term === '') {
       return of([]);
@@ -64,40 +56,43 @@ export class AppComponent implements OnInit{
     return this.httpClient.get('https://api.themoviedb.org/3/search/movie?api_key=' + APIKEY1 + "&query=" + term + "&language=es-ES");
   }
 
-  directors = '';
-  actors = '';
+  
   // Smells baaaaad
-  indexes = new  Array();
-  act = new Array();
   isShowDiv = true;
 
   getDetails(result: any){
     // Empty arrays to not stack info
-    this.indexes = [];
-    this.act= [];
-
-    this.name= result.Title;
+    this.directors = '';
+    this.actors = '';
+    this.year = '';
+    
+    this.name = result.Title;
     this.isShowDiv = false;
+    console.log('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY1 + "&append_to_response=credits,videos" + "&language=es-ES")
     this.httpClient.get('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY1 + "&append_to_response=credits,videos" + "&language=es-ES")
       .subscribe(data=> {
         this.movieDetails=data;
+
+        let dir = [];
+        let act = [];
+        for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
+          if (this.movieDetails['credits']['crew'][i]['job'] == "Director"){
+            dir.push(this.movieDetails['credits']['crew'][i]['name']);
+          }
+        }
+        let j = 0;
+        while (j < 4){
+          act.push(this.movieDetails['credits']['cast'][j]['name'])
+          j++;
+        }
+        this.directors = dir.toString();
+        this.directors.replace(',',', ');
+        this.actors = act.toString();
+        this.actors.replace(',',', ');
+        // Get year
+        for (var k = 0; k < 4; k++){
+          this.year += this.movieDetails['release_date'][k]
+        }
     })
-    // Get Directors and Actors
-    for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
-      if (this.movieDetails['credits']['crew'][i]['job'] == "Director"){
-        this.indexes.push(this.movieDetails['credits']['crew'][i]['name']);
-      }
-    }
-    let j = 0;
-    while (j < 4){
-      this.act.push(this.movieDetails['credits']['cast'][j]['name'])
-      j++;
-    }
-    this.directors = this.indexes.toString();
-    this.directors.replace(',',', ');
-    this.actors = this.act.toString();
-    this.actors.replace(',',', ');
-
-
   }
 }

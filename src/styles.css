@@ -8,8 +8,8 @@
     --first-color-lighter1: hsl(var(--first-hue-color), 5%, 44%);
     --first-color-lighter2: hsl(var(--first-hue-color), 3%, 75%);
     --second-color: hsl(var(--second-hue-color), 70%, 80%);
-    --second-color-medium: hsl(var(--second-hue-color), 24%, 73%);
-    --second-color-lighter: hsl(var(--second-hue-color), 24%, 88%);
+    --second-color-medium: hsl(var(--second-hue-color), 24%, 65%);
+    --second-color-lighter: hsl(var(--second-hue-color), 24%, 80%);
     --title-color: hsl(var(--first-hue-color), 8%, 15%);
     --text-color: hsl(var(--first-hue-color), 8%, 45%);
     --text-color-light: hsl(var(--first-hue-color), 8%, 65%);

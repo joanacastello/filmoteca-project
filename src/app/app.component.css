@@ -11,7 +11,7 @@
 
 .movie-details{
     background-image: linear-gradient(to top, var(--second-color-medium), var(--second-color-lighter));
-    border-color: white;
+
 }
 
 .poster-img{

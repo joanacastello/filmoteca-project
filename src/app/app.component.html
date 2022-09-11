@@ -32,13 +32,14 @@
           <div class="card movie-details" [hidden]="isShowDiv">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="https://image.tmdb.org/t/p/w185/{{movieDetails['poster_path']}}" class="img-fluid rounded-start m-2 poster-img img-thumbnail">
+                <img src="https://image.tmdb.org/t/p/w185/{{movieDetails['poster_path']}}" class="img-fluid rounded-start m-4 poster-img img-thumbnail">
               </div>
               <div class="col-md-7">
                 <div class="card-body">
-                  <h4 class="card-title">{{movieDetails['title']}}</h4>
+                  <h3 class="card-title">{{movieDetails['title']}}</h3>
+                  <h6>{{year}}</h6>
                   <p>{{movieDetails['overview']}}</p>
-                  <p> <b>Director(s):</b> {{directors}}</p>
+                  <p> <b>Director(es):</b> {{directors}}</p>
                   <p> <b>Reparto:</b> {{actors}}</p>
                   <p> <b>Idioma original:</b> {{movieDetails['original_language']}}</p>
                 </div>
