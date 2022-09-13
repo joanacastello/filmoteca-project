@@ -74,6 +74,7 @@ export class AppComponent implements OnInit{
       .subscribe(data=> {
         this.movieDetails=data;
 
+        // Get actors and directors
         let dir = [];
         let act = [];
         for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
@@ -90,14 +91,11 @@ export class AppComponent implements OnInit{
         this.directors.replace(',',', ');
         this.actors = act.toString();
         this.actors.replace(',',', ');
+
         // Get year
         for (var k = 0; k < 4; k++){
           this.year += this.movieDetails['release_date'][k]
         }
     })
-  }
-
-  getTrailer(result: any){
-    
   }
 }
