@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { of, fromEvent } from "rxjs";
 import { debounceTime, map, distinctUntilChanged, filter} from "rxjs/operators";
 
-const APIKEY = "ADD HERE YOUR API KEY";
+const APIKEY = "f5ce28d0768ba39023be1785d9178b7c";
 
 @Component({
   selector: 'app-root',
@@ -69,11 +69,12 @@ export class AppComponent implements OnInit{
     
     this.name = result.Title;
     this.isShowDiv = false;
-    //console.log('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY + "&append_to_response=credits,videos" + "&language=es-ES")
+    console.log('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY + "&append_to_response=credits,videos" + "&language=es-ES")
     this.httpClient.get('https://api.themoviedb.org/3/movie/' + result.id + '?api_key=' + APIKEY + "&append_to_response=credits,videos" + "&language=es-ES")
       .subscribe(data=> {
         this.movieDetails=data;
 
+        // Get actors and directors
         let dir = [];
         let act = [];
         for (var i = 0; i < this.movieDetails['credits']['crew'].length; i++) {
@@ -90,6 +91,7 @@ export class AppComponent implements OnInit{
         this.directors.replace(',',', ');
         this.actors = act.toString();
         this.actors.replace(',',', ');
+
         // Get year
         for (var k = 0; k < 4; k++){
           this.year += this.movieDetails['release_date'][k]
